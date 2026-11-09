@@ -45,17 +45,38 @@ export default function Home() {
   }, [theme, lang, preferencesLoaded]);
 
   useEffect(() => {
-    document.documentElement.classList.add("motion-ready");
     document.querySelectorAll<HTMLElement>("[data-reveal-stagger]").forEach((group) => {
-      Array.from(group.children).forEach((child, index) => (child as HTMLElement).style.setProperty("--reveal-delay", `${index * 85}ms`));
+      Array.from(group.children).forEach((child, index) => (child as HTMLElement).style.setProperty("--reveal-delay", `${index * 130}ms`));
     });
+    const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    const revealTarget = (target: HTMLElement) => {
+      target.classList.add("is-visible");
+      const timeline = target.closest<HTMLElement>(".timeline");
+      if (!timeline || !target.matches(".education-item")) return;
+      const items = Array.from(timeline.querySelectorAll(".education-item"));
+      const index = items.indexOf(target);
+      const currentProgress = Number(timeline.style.getPropertyValue("--timeline-progress")) || 0;
+      timeline.style.setProperty("--timeline-progress", `${Math.max(currentProgress, (index + 1) / items.length)}`);
+    };
     const revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        revealObserver.unobserve(entry.target);
-      }
-    }), { threshold: 0.14, rootMargin: "0px 0px -7% 0px" });
-    document.querySelectorAll("[data-reveal]").forEach((section) => revealObserver.observe(section));
+      if (entry.isIntersecting) { revealTarget(entry.target as HTMLElement); revealObserver.unobserve(entry.target); }
+    }), { threshold: 0.01, rootMargin: "0px 0px 4% 0px" });
+    revealTargets.forEach((section) => revealObserver.observe(section));
+    document.documentElement.classList.add("motion-ready");
+    let revealFrame = 0;
+    const revealVisibleTargets = () => {
+      revealFrame = 0;
+      document.querySelectorAll<HTMLElement>("[data-reveal]:not(.is-visible)").forEach((target) => {
+        const bounds = target.getBoundingClientRect();
+        if (bounds.top < window.innerHeight * 0.96 && bounds.bottom > 0) revealTarget(target);
+      });
+    };
+    const scheduleVisibleReveal = () => {
+      if (!revealFrame) revealFrame = window.requestAnimationFrame(revealVisibleTargets);
+    };
+    window.addEventListener("scroll", scheduleVisibleReveal, { passive: true });
+    window.addEventListener("resize", scheduleVisibleReveal);
+    scheduleVisibleReveal();
     const sectionObserver = new IntersectionObserver((entries) => entries.forEach((entry) => {
       if (entry.isIntersecting) setActive(entry.target.id);
     }), { rootMargin: "-25% 0px -65% 0px" });
@@ -66,6 +87,9 @@ export default function Home() {
     return () => {
       revealObserver.disconnect();
       sectionObserver.disconnect();
+      window.removeEventListener("scroll", scheduleVisibleReveal);
+      window.removeEventListener("resize", scheduleVisibleReveal);
+      if (revealFrame) window.cancelAnimationFrame(revealFrame);
       document.documentElement.classList.remove("motion-ready");
     };
   }, []);
