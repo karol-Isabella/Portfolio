@@ -31,16 +31,12 @@ export default function Projects({ lang }: { lang: Language }) {
   }, []);
 
   useEffect(() => {
-    const cards = trackRef.current?.querySelectorAll(".project-card[data-reveal]") ?? [];
-    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
-      if (entry.isIntersecting) { entry.target.classList.add("is-visible"); observer.unobserve(entry.target); }
-    }), { threshold: 0.12 });
-    cards.forEach((card, index) => {
-      (card as HTMLElement).style.setProperty("--reveal-delay", `${index * 85}ms`);
-      observer.observe(card);
+    if (!inView) return;
+    trackRef.current?.querySelectorAll<HTMLElement>(".project-card").forEach((card, index) => {
+      card.style.setProperty("--reveal-delay", `${index * 85}ms`);
+      card.classList.add("is-visible");
     });
-    return () => observer.disconnect();
-  }, [filter]);
+  }, [inView, filter]);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -53,7 +49,7 @@ export default function Projects({ lang }: { lang: Language }) {
 
   useEffect(() => {
     if (!inView || paused || visibleProjects.length < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const interval = window.setInterval(() => setActiveIndex((current) => (current + 1) % visibleProjects.length), 6200);
+    const interval = window.setInterval(() => setActiveIndex((current) => (current + 1) % visibleProjects.length), 4200);
     return () => window.clearInterval(interval);
   }, [inView, paused, visibleProjects.length]);
 
@@ -90,7 +86,7 @@ export default function Projects({ lang }: { lang: Language }) {
     </div>
     <div className="project-carousel" ref={carouselRef} role="region" aria-label={lang === "es" ? "Carrusel de proyectos" : "Project carousel"} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)}>
       <div className="project-list" ref={trackRef} onScroll={updateIndexAfterSwipe}>
-        {visibleProjects.map((project, i) => <article className="project-card" key={project.name} data-reveal aria-label={`${project.name}, ${i + 1} ${lang === "es" ? "de" : "of"} ${visibleProjects.length}`}>
+        {visibleProjects.map((project, i) => <article className={`project-card ${i === activeIndex ? "is-active" : ""}`} key={project.name} data-project-reveal aria-hidden={i !== activeIndex} inert={i !== activeIndex} aria-label={`${project.name}, ${i + 1} ${lang === "es" ? "de" : "of"} ${visibleProjects.length}`}>
           <div className="project-media"><PhotoPlaceholder lang={lang}/><span className="media-index">0{projects.indexOf(project) + 1}</span></div>
           <div className="project-copy">
             {project.featured && <Badge>✦ {lang === "es" ? "DESTACADO" : "FEATURED"}</Badge>}

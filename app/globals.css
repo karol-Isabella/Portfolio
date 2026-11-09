@@ -63,7 +63,7 @@
 .filter-chip:hover{transform:translateY(-2px) rotate(-1deg);box-shadow:2px 3px 0 var(--wine)}
 .filter-chip.selected{background:var(--pink);box-shadow:2px 2px 0 var(--wine)}
 .project-card{animation:card-arrive .45s cubic-bezier(.34,1.35,.64,1) both}
-@keyframes card-arrive{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes card-arrive{from{transform:translateY(18px) scale(.985)}to{transform:translateY(0) scale(1)}}
 .terminal{min-height:400px}
 .terminal-lights{display:flex;gap:6px}
 .terminal-lights i{width:9px;height:9px;border-radius:50%;background:#de3034}
@@ -242,9 +242,11 @@ main,.site-footer{position:relative;z-index:1}
 .terminal-input .cursor{flex:none;margin-left:-2px}
 
 /* The project list is a compact, touch-friendly editorial carousel. */
-.project-list{position:relative;display:flex;flex-direction:row;align-items:stretch;gap:24px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;scroll-padding-inline:max(8%,calc((100% - 1040px)/2));padding:24px max(8%,calc((100% - 1040px)/2)) 30px;scroll-behavior:smooth}
+.project-list{position:relative;display:flex;flex-direction:row;align-items:stretch;gap:0;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;scroll-padding-inline:max(0px,calc((100% - 1040px)/2));padding:24px max(0px,calc((100% - 1040px)/2)) 30px;scroll-behavior:smooth}
 .project-list::-webkit-scrollbar{display:none}
-.project-card{flex:0 0 min(84%,1040px);min-height:0;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(22px,3vw,38px);padding:clamp(20px,2.5vw,30px);scroll-snap-align:center;scroll-snap-stop:always}
+.project-card{flex:0 0 min(100%,1040px);min-height:0;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(22px,3vw,38px);padding:clamp(20px,2.5vw,30px);scroll-snap-align:center;scroll-snap-stop:always}
+.project-card:not(.is-active){filter:none;opacity:.32;scale:.94;transition:filter .35s,opacity .35s,scale .35s}
+.project-card.is-active{filter:none;opacity:1;scale:1;transition:filter .35s,opacity .35s,scale .35s}
 .project-card .project-media{min-width:0}
 .project-media .photo-placeholder{width:100%;height:clamp(180px,24vw,250px);min-height:0;aspect-ratio:1.35 / 1}
 .project-card .project-copy{min-width:0}
@@ -260,8 +262,40 @@ main,.site-footer{position:relative;z-index:1}
 .carousel-dot.active{width:24px;background:var(--wine)}
 .carousel-count{min-width:48px;color:var(--wine);font:700 11px var(--label);font-variant-numeric:tabular-nums}
 .carousel-count i{margin-inline:3px;color:var(--muted);font-style:normal}
-@media(max-width:700px){.project-list{gap:14px;padding-block:20px 24px;padding-inline:6%;scroll-padding-inline:6%}.project-card{flex-basis:88%;grid-template-columns:minmax(0,1fr);gap:14px;padding:15px}.project-media .photo-placeholder{height:190px;min-height:0}.project-card .project-copy h3{font-size:25px}.carousel-controls{gap:11px}.carousel-arrow{width:38px;height:38px}}
+@media(max-width:700px){.project-list{gap:0;padding-block:20px 24px;padding-inline:0;scroll-padding-inline:0}.project-card{flex-basis:100%;grid-template-columns:minmax(0,1fr);gap:14px;padding:15px}.project-media .photo-placeholder{height:190px;min-height:0}.project-card .project-copy h3{font-size:25px}.carousel-controls{gap:11px}.carousel-arrow{width:38px;height:38px}}
 @media(prefers-reduced-motion:reduce){.project-list{scroll-behavior:auto}.carousel-arrow,.carousel-dot{transition:none}}
+
+/* Center the featured project and softly dissolve the neighboring previews. */
+.project-list{gap:24px;padding-inline:max(0px,calc((100% - min(58vw,780px))/2));scroll-padding-inline:max(0px,calc((100% - min(58vw,780px))/2));mask-image:linear-gradient(90deg,transparent 0%,#000 15%,#000 83%,transparent 100%)}
+.project-card{flex:0 0 min(58vw,780px);max-width:780px;opacity:0;transition:opacity .55s ease,filter .35s,scale .35s;transition-delay:var(--reveal-delay,0ms)}
+.project-card.is-visible{opacity:1}
+.project-card:not(.is-active).is-visible{filter:none;opacity:.32;scale:.94;pointer-events:none}
+.project-card.is-active.is-visible{filter:none;opacity:1;scale:1;pointer-events:auto}
+:root[data-theme="dark"] .project-card:not(.is-active).is-visible{opacity:.46}
+
+/* Keep each technology icon distinct and give the card content room to breathe. */
+.skill-card{padding:20px;min-height:190px}
+.skill-card h3{margin:10px 0 3px;line-height:1.2}
+.skill-card strong{margin:2px 0 10px;line-height:1.65}
+.skill-card p{margin:0;line-height:1.75}
+.skill-icon{width:40px;height:40px;border-radius:12px;box-shadow:0 3px 0 color-mix(in srgb,var(--wine) 28%,transparent)}
+.skill-icon svg{width:19px;height:19px}
+
+/* The timeline line grows as each education entry enters the viewport. */
+.timeline:before{transform:scaleY(var(--timeline-progress,0));transform-origin:top;transition:transform .65s cubic-bezier(.2,.75,.25,1)}
+.education-item[data-reveal]{transition-delay:var(--reveal-delay,0ms)}
+.cert-card[data-reveal],.skill-card[data-reveal]{transition-delay:var(--reveal-delay,0ms)}
+
+/* Match the editable field width to its text so the simulated block cursor stays adjacent. */
+.terminal-input{display:flex;align-items:center;gap:2px;width:max-content;max-width:100%}
+.terminal-input input{box-sizing:content-box;flex:0 0 auto;width:0;min-width:0;max-width:calc(100% - 26px);padding:0;white-space:pre}
+.terminal-input .cursor{display:inline-block;flex:0 0 auto;width:.72em;height:1.05em;overflow:hidden;margin-left:0;background:#ff68ae;color:transparent;vertical-align:-.16em;animation:terminal-cursor-blink 1s steps(2,start) infinite}
+@keyframes terminal-cursor-blink{50%{opacity:.24}}
+.terminal-body p{padding-right:5px}
+.terminal-command{padding-right:64px}
+@media(min-width:701px) and (max-width:900px){.project-card{flex-basis:84vw;max-width:760px}.project-list{padding-inline:max(0px,calc((100% - min(84vw,760px))/2));scroll-padding-inline:max(0px,calc((100% - min(84vw,760px))/2))}}
+@media(max-width:700px){.project-list{gap:0;padding-inline:0;scroll-padding-inline:0;mask-image:none}.project-card{flex-basis:100%;max-width:none}.project-card:not(.is-active).is-visible{filter:none;opacity:.2;scale:.98}.skill-card{min-height:178px;padding:16px}}
+@media(prefers-reduced-motion:reduce){.timeline:before{transition:none}.terminal-input .cursor{animation:none}}
 
 /* Make the pastel light atmosphere visible without losing its soft edges. */
 .ambient-clouds{opacity:.9}
@@ -270,6 +304,7 @@ main,.site-footer{position:relative;z-index:1}
 @media(max-width:700px){.ambient-clouds{opacity:.9}.ambient-sparkles{opacity:.86}}
 
 /* Match the navbar's tactile wine edge on the brand and theme controls. */
-.brand-mark{box-shadow:0 3px 0 #720808,inset 0 0 0 3px var(--canvas)}
-.lang-toggle,.theme-toggle{box-shadow:0 3px 0 #720808}
+.brand-mark{box-shadow:0 3px 0 var(--wine),inset 0 0 0 3px var(--canvas)}
+.lang-toggle,.theme-toggle{box-shadow:0 3px 0 var(--wine)}
 .lang-toggle:active,.theme-toggle:active{transform:translateY(2px);box-shadow:none}
+.cv-view-pending:disabled{cursor:not-allowed;opacity:.78;box-shadow:2px 3px 0 var(--wine-dark)}

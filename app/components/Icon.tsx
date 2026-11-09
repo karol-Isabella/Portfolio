@@ -1,11 +1,12 @@
 import type { ReactNode, SVGProps } from "react";
 
-type Name = "arrow-right" | "arrow-up" | "arrow-down" | "download" | "github" | "linkedin" | "instagram" | "mail" | "phone" | "sun" | "moon" | "menu" | "close" | "copy" | "check" | "sparkle" | "code" | "palette" | "target" | "heart" | "verified";
+type Name = "arrow-right" | "arrow-up" | "arrow-down" | "download" | "eye" | "github" | "linkedin" | "instagram" | "mail" | "phone" | "sun" | "moon" | "menu" | "close" | "copy" | "check" | "sparkle" | "code" | "layers" | "database" | "palette" | "target" | "heart" | "verified";
 const paths: Record<Name, ReactNode> = {
   "arrow-right": <path d="M5 12h14m-6-6 6 6-6 6" />,
   "arrow-up": <path d="M12 19V5m-7 7 7-7 7 7" />,
   "arrow-down": <><path d="M12 5v14m-7-7 7 7 7-7"/><path d="M5 3h14"/></>,
   download: <><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></>,
+  eye: <><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></>,
   github: <><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 6v-3.9a3.4 3.4 0 0 0-.9-2.7c3-.3 6.1-1.5 6.1-6.7a5.2 5.2 0 0 0-1.4-3.6 4.8 4.8 0 0 0-.1-3.6S17.5 1.2 15 3a13 13 0 0 0-7 0C5.5 1.2 3.3 1.5 3.3 1.5a4.8 4.8 0 0 0-.1 3.6 5.2 5.2 0 0 0-1.4 3.6c0 5.2 3.1 6.4 6.1 6.7A3.4 3.4 0 0 0 7 18v4" /></>,
   linkedin: <><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6ZM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></>,
   instagram: <><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></>,
@@ -19,6 +20,8 @@ const paths: Record<Name, ReactNode> = {
   check: <path d="m5 12 4 4L19 6"/>,
   sparkle: <><path d="m12 3 1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3Z"/><path d="m19 14 1.1 2.9L23 18l-2.9 1.1L19 22l-1.1-2.9L15 18l2.9-1.1L19 14Z"/></>,
   code: <><path d="m8 8-4 4 4 4m8-8 4 4-4 4m-3-10-2 12"/></>,
+  layers: <><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></>,
+  database: <><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></>,
   palette: <><path d="M12 3a9 9 0 1 0 0 18h1.2a2 2 0 0 0 1.3-3.5 1.8 1.8 0 0 1 1.2-3.2H18a3 3 0 0 0 3-3c0-4.6-4-8.3-9-8.3Z"/><circle cx="7.5" cy="11" r=".8"/><circle cx="10" cy="7.5" r=".8"/><circle cx="15" cy="8" r=".8"/></>,
   target: <><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></>,
   heart: <path d="M20.8 8.7c0 5.4-8.8 11-8.8 11s-8.8-5.6-8.8-11A4.7 4.7 0 0 1 12 6.1a4.7 4.7 0 0 1 8.8 2.6Z"/>,
