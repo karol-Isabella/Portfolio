@@ -201,3 +201,75 @@ html.motion-ready [data-reveal].is-visible{opacity:1;transform:translateY(0) sca
 .footer-email button{width:38px;height:38px;flex:none}
 @media(max-width:700px){.footer-email>div>a{min-height:40px;padding-inline:30px;font-size:9px}.footer-email>div>a svg{left:10px;width:16px;height:16px}.footer-email button{width:32px;height:32px}}
 
+/* Fluid, soft light and falling particles stay behind the complete page. */
+html{background:var(--canvas);overflow-x:clip}
+body{position:relative;isolation:isolate;background:transparent;overflow-x:clip}
+main,.site-footer{position:relative;z-index:1}
+.animated-background{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;contain:strict;background:var(--canvas);transition:background-color .65s ease}
+.ambient-clouds{position:absolute;inset:-8%;overflow:hidden;opacity:.76;transition:opacity .9s ease;will-change:opacity}
+.animated-background.is-hero .ambient-clouds{opacity:1}
+.ambient-cloud{position:absolute;display:block;width:clamp(360px,58vw,880px);height:clamp(320px,54vw,820px);border-radius:50%;filter:blur(clamp(70px,10vw,150px));opacity:1;will-change:transform;transform:translate3d(0,0,0);translate:var(--light-parallax-x,0px) var(--light-parallax-y,0px);animation:cloud-sway 28s ease-in-out infinite alternate}
+.cloud-pink{left:-20%;top:-12%;background:radial-gradient(ellipse at 48% 52%,rgba(254,198,211,.98) 0,rgba(254,198,211,.62) 36%,rgba(254,198,211,0) 72%);animation-duration:25s}
+.cloud-blue{right:-22%;top:8%;background:radial-gradient(ellipse at 48% 48%,rgba(186,212,237,.98) 0,rgba(186,212,237,.64) 37%,rgba(186,212,237,0) 74%);animation-duration:31s;animation-delay:-13s}
+.cloud-wine{left:16%;bottom:-55%;width:clamp(440px,64vw,940px);height:clamp(320px,45vw,650px);background:radial-gradient(ellipse at 50% 48%,rgba(114,8,8,.26) 0,rgba(254,198,211,.48) 33%,rgba(254,198,211,0) 73%);animation-duration:38s;animation-delay:-20s}
+.ambient-sparkles{position:absolute;inset:0;width:100%;height:100%;opacity:.62;transition:opacity .8s ease}
+.animated-background.is-hero .ambient-sparkles{opacity:.96}
+@keyframes cloud-sway{0%{transform:translate3d(-4%,1%,0) scale(.92)}45%{transform:translate3d(4%,5%,0) scale(1.08)}100%{transform:translate3d(-1%,-5%,0) scale(1.02)}}
+:root[data-theme="dark"] .animated-background{background:#1b1114}
+:root[data-theme="dark"] .cloud-pink{background:radial-gradient(ellipse at 48% 52%,rgba(211,111,145,.86) 0,rgba(139,48,75,.58) 37%,rgba(70,20,34,0) 74%)}
+:root[data-theme="dark"] .cloud-blue{background:radial-gradient(ellipse at 48% 48%,rgba(64,111,151,.9) 0,rgba(36,60,81,.62) 38%,rgba(20,32,44,0) 74%)}
+:root[data-theme="dark"] .cloud-wine{background:radial-gradient(ellipse at 50% 48%,rgba(159,53,86,.68) 0,rgba(112,40,61,.48) 36%,rgba(27,17,20,0) 74%)}
+@media(max-width:700px){.ambient-clouds{inset:-6%;opacity:.78}.animated-background.is-hero .ambient-clouds{opacity:1}.ambient-cloud{width:112vw;height:92vw;filter:blur(62px)}.cloud-pink{left:-30%;top:-3%}.cloud-blue{right:-30%;top:14%}.cloud-wine{left:-3%;bottom:-38%;width:122vw;height:82vw}.ambient-sparkles{opacity:.7}.animated-background.is-hero .ambient-sparkles{opacity:1}}
+@media(prefers-reduced-motion:reduce){.ambient-cloud{animation:none!important;translate:0 0}.ambient-clouds,.ambient-sparkles{transition:none}.ambient-sparkles{opacity:.2!important}}
+@media(min-width:701px) and (max-width:900px){.site-header{gap:9px;padding-inline:16px}.nav-pill{gap:1px;padding:4px}.nav-pill a{padding:6px 8px;font-size:9px}.header-actions{gap:6px}.header-cv{padding:6px 9px;font-size:9px}.sparkle-sticker{right:-24px}}
+.header-actions{gap:10px}
+.lang-toggle,.theme-toggle{height:36px;display:inline-flex;align-items:center;justify-content:center}
+.lang-toggle{min-width:38px;padding:0 6px}
+.theme-toggle{width:36px;min-width:36px}
+.theme-toggle svg{width:19px;height:19px}
+.header-cv{height:36px;padding:0 16px;gap:9px;font-size:10px;white-space:nowrap}
+.header-cv svg{width:17px;height:17px}
+@media(min-width:701px) and (max-width:900px){.header-actions{gap:6px}.header-cv{padding-inline:9px}}
+
+/* Dark theme: keep the blue trait sticker and footer mail control readable. */
+:root[data-theme="dark"] .trait-tags .badge.blue{background:#bad4ed;color:#153a52;border-color:#bad4ed}
+:root[data-theme="dark"] .footer-email>div>a{background:#5a202b;color:#fff4ed}
+:root[data-theme="dark"] .footer-email button{background:#fec6d3;color:#4c0002;border-color:#fec6d3}
+
+/* Keep the terminal's simulated block cursor beside the editable prompt. */
+.terminal-input{gap:4px;width:max-content;max-width:100%}
+.terminal-input input{width:auto;min-width:1ch;max-width:calc(100% - 28px);padding:0;flex:0 1 auto}
+.terminal-input .cursor{flex:none;margin-left:-2px}
+
+/* The project list is a compact, touch-friendly editorial carousel. */
+.project-list{position:relative;display:flex;flex-direction:row;align-items:stretch;gap:24px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;scroll-padding-inline:max(8%,calc((100% - 1040px)/2));padding:24px max(8%,calc((100% - 1040px)/2)) 30px;scroll-behavior:smooth}
+.project-list::-webkit-scrollbar{display:none}
+.project-card{flex:0 0 min(84%,1040px);min-height:0;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(22px,3vw,38px);padding:clamp(20px,2.5vw,30px);scroll-snap-align:center;scroll-snap-stop:always}
+.project-card .project-media{min-width:0}
+.project-media .photo-placeholder{width:100%;height:clamp(180px,24vw,250px);min-height:0;aspect-ratio:1.35 / 1}
+.project-card .project-copy{min-width:0}
+.project-card .project-copy h3{font-size:clamp(22px,2.3vw,30px)}
+.carousel-controls{display:flex;align-items:center;justify-content:center;gap:16px;margin:0 auto;width:max-content;max-width:100%}
+.carousel-arrow{width:42px;height:42px;display:grid;place-items:center;border:1.5px solid var(--wine);border-radius:50%;background:var(--paper);color:var(--wine);box-shadow:0 3px 0 #720808;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s}
+.carousel-arrow:hover{transform:translateY(-2px);background:var(--pink);box-shadow:0 5px 0 #720808}
+.carousel-arrow:active{transform:translateY(1px);box-shadow:none}
+.carousel-arrow:first-child svg{transform:rotate(180deg)}
+.carousel-pagination{display:flex;align-items:center;gap:7px}
+.carousel-dot{width:8px;height:8px;padding:0;border:0;border-radius:99px;background:var(--line);cursor:pointer;transition:width .25s,background .25s,transform .25s}
+.carousel-dot:hover{transform:scale(1.2)}
+.carousel-dot.active{width:24px;background:var(--wine)}
+.carousel-count{min-width:48px;color:var(--wine);font:700 11px var(--label);font-variant-numeric:tabular-nums}
+.carousel-count i{margin-inline:3px;color:var(--muted);font-style:normal}
+@media(max-width:700px){.project-list{gap:14px;padding-block:20px 24px;padding-inline:6%;scroll-padding-inline:6%}.project-card{flex-basis:88%;grid-template-columns:minmax(0,1fr);gap:14px;padding:15px}.project-media .photo-placeholder{height:190px;min-height:0}.project-card .project-copy h3{font-size:25px}.carousel-controls{gap:11px}.carousel-arrow{width:38px;height:38px}}
+@media(prefers-reduced-motion:reduce){.project-list{scroll-behavior:auto}.carousel-arrow,.carousel-dot{transition:none}}
+
+/* Make the pastel light atmosphere visible without losing its soft edges. */
+.ambient-clouds{opacity:.9}
+.ambient-sparkles{opacity:.8}
+.animated-background.is-hero .ambient-sparkles{opacity:1}
+@media(max-width:700px){.ambient-clouds{opacity:.9}.ambient-sparkles{opacity:.86}}
+
+/* Match the navbar's tactile wine edge on the brand and theme controls. */
+.brand-mark{box-shadow:0 3px 0 #720808,inset 0 0 0 3px var(--canvas)}
+.lang-toggle,.theme-toggle{box-shadow:0 3px 0 #720808}
+.lang-toggle:active,.theme-toggle:active{transform:translateY(2px);box-shadow:none}
