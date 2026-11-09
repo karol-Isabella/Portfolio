@@ -1,5 +1,8 @@
 export const CV_DOWNLOAD_PATH = "/cv/CV-Karol-Cabrera.pdf";
-export const CV_VIEW_URL = "";
+export const CV_VIEW_URLS = {
+  es: "",
+  en: "",
+} as const;
 
 export const socialLinks = {
   github: "https://github.com/karol-isabella",
