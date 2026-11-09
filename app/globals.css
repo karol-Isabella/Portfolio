@@ -104,3 +104,100 @@ html.motion-ready [data-reveal].is-visible{opacity:1;transform:translateY(0) sca
 :root[data-theme="dark"] .contact-button{background:#fff;color:#4c0002}
 :root[data-theme="dark"] .skill-icon.tone-1{color:#f4f7fb}
 
+/* Keep social details legible and icons aligned at every width. */
+.contact-socials{width:min(100%,1000px);max-width:none;grid-template-columns:repeat(3,minmax(200px,1fr));gap:16px}
+.contact-socials a{min-width:0;min-height:82px;grid-template-columns:28px minmax(0,1fr);grid-template-rows:auto auto;align-content:center;column-gap:10px;row-gap:5px;padding:14px 17px}
+.contact-socials a>svg{grid-row:1/3;align-self:center;width:21px;height:21px}
+.contact-socials small,.contact-socials b{min-width:0;line-height:1.35}
+.contact-socials b{overflow-wrap:anywhere}
+.contact-socials a:first-child b{white-space:nowrap;letter-spacing:.015em}
+@media(max-width:700px){.contact-socials{grid-template-columns:minmax(0,1fr);width:min(100%,380px);gap:9px}.contact-socials a{min-height:66px}}
+@media(min-width:701px) and (max-width:980px){.contact-socials{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.contact-socials a{padding:12px 10px}.contact-socials a:first-child b{font-size:10px}}
+
+/* A more prominent but restrained navigation pill with clear tactile states. */
+.nav-pill{gap:5px;padding:6px;background:color-mix(in srgb,var(--paper) 90%,transparent);box-shadow:0 4px 0 var(--wine),0 8px 20px rgba(70,12,16,.07);transition:box-shadow .25s,transform .25s}
+.nav-pill:hover{box-shadow:0 5px 0 var(--wine),0 12px 24px rgba(70,12,16,.11)}
+.nav-pill a{padding:9px 15px;font-size:11px;transition:background .22s,color .22s,transform .22s,box-shadow .22s}
+.nav-pill a:hover{transform:translateY(-1px);background:color-mix(in srgb,var(--pink) 58%,var(--paper));color:var(--wine)}
+.nav-pill a.active{background:var(--pink);color:var(--wine);box-shadow:inset 0 0 0 1px var(--wine),0 2px 0 color-mix(in srgb,var(--wine) 70%,transparent)}
+
+/* Airy frosted project cards, with quiet floating motion instead of a wine selection flash. */
+.project-card{position:relative;min-width:0;background:color-mix(in srgb,var(--paper) 84%,transparent);backdrop-filter:blur(9px);border-color:color-mix(in srgb,var(--line) 72%,transparent);box-shadow:0 12px 28px rgba(54,20,20,.075),0 3px 0 color-mix(in srgb,var(--line) 55%,transparent);translate:0 0;animation:card-arrive .45s cubic-bezier(.34,1.35,.64,1) both,project-float 8s ease-in-out infinite;animation-delay:0s,-1.3s}
+.project-card:hover{translate:0 -6px;transform:rotate(-.2deg);box-shadow:0 20px 36px rgba(54,20,20,.13),0 4px 0 color-mix(in srgb,var(--blue) 70%,transparent);border-color:color-mix(in srgb,var(--blue) 68%,var(--line))}
+.project-card:active{translate:2px 2px;transform:none;box-shadow:none}
+.project-media .photo-placeholder{box-shadow:0 8px 18px rgba(54,20,20,.1)}
+.project-card:nth-child(2){animation-delay:0s,-3.2s}.project-card:nth-child(3){animation-delay:0s,-5.1s}.project-card:nth-child(4){animation-delay:0s,-2.4s}.project-card:nth-child(5){animation-delay:0s,-4.2s}
+@keyframes project-float{0%,100%{translate:0 0}50%{translate:0 -5px}}
+:root[data-theme="dark"] .project-card{background:color-mix(in srgb,#291d22 85%,transparent);border-color:#49333b;box-shadow:0 12px 28px rgba(0,0,0,.2),0 3px 0 rgba(245,196,206,.1)}
+:root[data-theme="dark"] .project-card:hover{border-color:#759ab6;box-shadow:0 20px 36px rgba(0,0,0,.28),0 4px 0 rgba(117,154,182,.5)}
+
+/* Keep long command rows readable while the optional copy control stays compact. */
+.terminal-body{min-width:0;overflow-wrap:anywhere}
+.terminal-body p{min-width:0;overflow-wrap:anywhere}
+.terminal-command{justify-content:flex-start;flex-wrap:wrap;column-gap:8px;row-gap:3px}
+.terminal-command-text{flex:1 1 100%;min-width:0;overflow-wrap:anywhere}
+.terminal-command button{flex:none}
+.terminal-input{min-width:0}
+.terminal-input input{min-width:0;flex:1 1 220px}
+
+/* Align the cursor's center to the actual pointer coordinates. */
+.editorial-cursor{top:0;left:0;transform:translate3d(var(--cursor-x,-100px),var(--cursor-y,-100px),0) translate(-50%,-50%)}
+
+/* Match the portrait frame finish in the introduction and About sections. */
+.about-photo{perspective:1000px;transform:rotate(-1.5deg);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.about-photo:hover{transform:rotate(0) translateY(-4px);box-shadow:8px 10px 0 rgba(0,0,0,.18)}
+.about-photo .photo-placeholder{background:linear-gradient(180deg,#f6e6e5 50%,#ab6567 100%);border-radius:13px}
+.about-photo .photo-placeholder>span{font-style:italic;color:rgba(115,7,10,.22)}
+.about-photo .badge{display:inline-flex;align-items:center;gap:5px}
+.about-content .badge svg{flex:none}
+.about-section{position:relative;isolation:isolate}
+.about-section::before{content:"";position:absolute;z-index:0;inset:0;pointer-events:none;background-image:radial-gradient(ellipse 52% 56% at 2% 25%,rgba(254,198,211,.38),transparent 78%),radial-gradient(ellipse 54% 56% at 98% 72%,rgba(186,212,237,.32),transparent 80%),radial-gradient(ellipse 42% 34% at 50% 112%,rgba(254,198,211,.24),transparent 78%);background-size:100% 100%;opacity:.95;animation:about-light-drift 34s ease-in-out infinite alternate}
+.about-grid{position:relative;z-index:1}
+@keyframes about-light-drift{0%{background-position:0% 5%,100% 90%,45% 100%}100%{background-position:75% 48%,18% 28%,70% 20%}}
+:root[data-theme="dark"] .about-section::before{background-image:radial-gradient(ellipse 52% 56% at 2% 25%,rgba(220,120,150,.35),transparent 78%),radial-gradient(ellipse 54% 56% at 98% 72%,rgba(75,111,148,.38),transparent 80%),radial-gradient(ellipse 42% 34% at 50% 112%,rgba(139,48,75,.28),transparent 78%)}
+@media(max-width:700px){.about-section::before{inset:0;opacity:.82;background-size:100% 100%}}
+@media(prefers-reduced-motion:reduce){.about-section::before{animation:none!important}}
+@media(max-width:700px){.nav-pill{box-shadow:0 4px 0 var(--wine),0 12px 25px rgba(70,12,16,.12)}.project-card{animation:card-arrive .45s cubic-bezier(.34,1.35,.64,1) both,project-float 9s ease-in-out infinite}.about-photo:hover{transform:rotate(-1deg)}}
+
+/* Project filter stickers use their own pastel identity; hover only lifts them. */
+.filter-chip{transform:translateY(0);box-shadow:0 2px 0 var(--wine);transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}
+.filter-chip:hover{transform:translateY(-2px);box-shadow:0 4px 0 var(--wine);filter:saturate(1.04)}
+.filter-chip:active{transform:translateY(1px);box-shadow:none}
+.filter-chip.filter-all,.filter-chip.filter-create{background:#fec6d3;color:#720808}
+.filter-chip.filter-design{background:#bad4ed;color:#17394f}
+.filter-chip.filter-build{background:#fff;color:#720808}
+.filter-chip.selected{outline:1px solid currentColor;outline-offset:1px;box-shadow:0 2px 0 var(--wine)}
+.filter-chip.selected:hover{box-shadow:0 4px 0 var(--wine)}
+
+/* Compact copy affordances never take up room in the reference terminal rows. */
+.terminal{min-height:500px;aspect-ratio:1.2/1;border-radius:17px;background:#082536;box-shadow:0 13px 20px rgba(0,0,0,.14);font-size:12px;line-height:1.62}
+.terminal-top{height:50px;padding:0 22px;font-size:10px}
+.terminal-lights{gap:7px}
+.terminal-lights i{width:12px;height:12px}
+.terminal-body{padding:18px 24px 22px}
+.terminal-body p{margin-bottom:7px}
+.terminal-command{position:relative;display:flex;align-items:center;justify-content:flex-start;flex-wrap:nowrap;padding-right:0}
+.terminal-command-text{display:block;flex:1 1 auto;min-width:0;overflow-wrap:anywhere}
+.terminal-command button{position:absolute;right:0;top:0;z-index:1;opacity:0;pointer-events:none}
+.terminal-command:hover button,.terminal-command button:focus-visible{opacity:1;pointer-events:auto}
+.terminal-input{margin-top:13px}
+.terminal-input input{font-size:inherit}
+.terminal-input .cursor{font-size:15px;line-height:1}
+@media(max-width:900px){.terminal{min-height:460px;aspect-ratio:auto}.terminal-body{padding:16px 18px}}
+@media(max-width:700px){.terminal{min-height:440px;font-size:11px}.terminal-top{height:43px;padding-inline:15px}.terminal-body{padding:15px}.terminal-body p{margin-bottom:6px}}
+
+/* Certification-style verified icons and exact pastel tag sequence from the reference. */
+.trait-tags .badge{gap:8px;padding:8px 16px;font-size:11px;letter-spacing:.045em}
+.trait-tags .badge svg{flex:none}
+.trait-tags .badge.dark{background:rgba(255,224,224,.15);color:#ffe5e4;border-color:rgba(255,218,218,.35)}
+.trait-tags .badge.white{background:#f7e8e6;color:#720808}
+.trait-tags .badge.pink{background:#fec6d3;color:#720808}
+.trait-tags .badge.blue{background:#bad4ed;color:#153a52}
+
+/* Footer email uses a fixed left icon and a truly centered address. */
+.footer-email>div{gap:12px}
+.footer-email>div>a{position:relative;display:grid;place-items:center;min-height:46px;padding:8px 42px;background:var(--wine);font-size:12px}
+.footer-email>div>a svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:20px;height:20px}
+.footer-email button{width:38px;height:38px;flex:none}
+@media(max-width:700px){.footer-email>div>a{min-height:40px;padding-inline:30px;font-size:9px}.footer-email>div>a svg{left:10px;width:16px;height:16px}.footer-email button{width:32px;height:32px}}
+
