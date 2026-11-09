@@ -40,6 +40,16 @@ export default function Terminal({ lang }: { lang: Language }) {
     let character = 0;
     let timer = 0;
     const startup = getStartup(lang);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || document.visibilityState === "hidden") {
+      const frame = window.requestAnimationFrame(() => setLines(startup));
+      return () => window.cancelAnimationFrame(frame);
+    }
+    const finishWhenHidden = () => {
+      if (document.visibilityState !== "hidden") return;
+      window.clearTimeout(timer);
+      setLines(startup);
+    };
+    document.addEventListener("visibilitychange", finishWhenHidden);
     const typeNext = () => {
       if (row >= startup.length) {
         setLines(startup);
@@ -62,7 +72,10 @@ export default function Terminal({ lang }: { lang: Language }) {
       } else timer = window.setTimeout(typeNext, source.kind === "command" ? 42 : 15);
     };
     typeNext();
-    return () => window.clearTimeout(timer);
+    return () => {
+      window.clearTimeout(timer);
+      document.removeEventListener("visibilitychange", finishWhenHidden);
+    };
   }, [started, lang]);
 
   const runCommand = (event: FormEvent<HTMLFormElement>) => {
@@ -77,7 +90,7 @@ export default function Terminal({ lang }: { lang: Language }) {
       contact: lang === "es" ? "Correo: cabreraisabella1105@gmail.com · Pasto, Colombia" : "Email: cabreraisabella1105@gmail.com · Pasto, Colombia",
     };
     if (command === "clear") setLines([]);
-    else setLines((current) => [...current, { text: `$ ${command}`, kind: "command" }, { text: output[command] ?? (lang === "es" ? "Comando no reconocido. Escribe help para ver opciones." : "Command not found. Type help to see options."), kind: "muted" }]);
+    else setLines((current) => [...current, { text: `$ ${command}`, kind: "command" }, ...(output[command] ? [{ text: output[command], kind: "muted" as const }] : [])]);
     setInput("");
   };
   const copyCommand = async (command: string) => {
@@ -88,6 +101,6 @@ export default function Terminal({ lang }: { lang: Language }) {
 
   return <div className="terminal" aria-label={lang === "es" ? "Terminal interactiva de habilidades" : "Interactive skills terminal"}>
     <div className="terminal-top"><span className="terminal-lights"><i/><i/><i/></span><span>karol-isabella</span><span>▣ bash</span></div>
-    <div className="terminal-body" aria-live="polite">{lines.map((line, index) => line.kind === "command" ? <p key={`${index}-${line.text}`} className="command terminal-command"><span className="terminal-command-text">{line.text}</span><button onClick={() => copyCommand(line.text)} type="button" aria-label={copied ? (lang === "es" ? "Comando copiado" : "Command copied") : (lang === "es" ? "Copiar comando" : "Copy command")}><Icon name={copied ? "check" : "copy"} size={13}/><span>{copied ? (lang === "es" ? "Copiado" : "Copied") : (lang === "es" ? "Copiar" : "Copy")}</span></button></p> : <p key={`${index}-${line.text}`} className={line.kind}>{line.text}</p>)}<form className="terminal-input" onSubmit={runCommand}><label htmlFor="terminal-command">$</label><input id="terminal-command" value={input} onChange={(event) => setInput(event.target.value)} size={Math.max(1, input.length + 1)} aria-label={lang === "es" ? "Escribe un comando" : "Enter a command"} autoComplete="off" spellCheck="false"/><span className="cursor">█</span></form></div>
+    <div className="terminal-body" aria-live="polite">{lines.map((line, index) => line.kind === "command" ? <p key={`${index}-${line.text}`} className="command terminal-command"><span className="terminal-command-text">{line.text}</span><button onClick={() => copyCommand(line.text)} type="button" aria-label={copied ? (lang === "es" ? "Comando copiado" : "Command copied") : (lang === "es" ? "Copiar comando" : "Copy command")}><Icon name={copied ? "check" : "copy"} size={13}/><span>{copied ? (lang === "es" ? "Copiado" : "Copied") : (lang === "es" ? "Copiar" : "Copy")}</span></button></p> : <p key={`${index}-${line.text}`} className={line.kind}>{line.text}</p>)}<form className="terminal-input" onSubmit={runCommand}><label htmlFor="terminal-command">$</label><input id="terminal-command" value={input} onChange={(event) => setInput(event.target.value)} style={{ width: input.length ? `${input.length}ch` : "0ch" }} aria-label={lang === "es" ? "Escribe un comando" : "Enter a command"} autoComplete="off" spellCheck="false"/><span className="cursor" aria-hidden="true">█</span></form></div>
   </div>;
 }
