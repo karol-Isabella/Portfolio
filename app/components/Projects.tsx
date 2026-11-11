@@ -82,7 +82,7 @@ export default function Projects({ lang }: { lang: Language }) {
 
   return <section className="projects-section section-wrap" id="proyectos">
     <SectionHeading title={t.projects} description={t.projectsIntro}/>
-    <div className="project-filters" role="group" aria-label={lang === "es" ? "Filtrar proyectos" : "Filter projects"}>
+    <div className="project-filters flex gap-1.5" role="group" aria-label={lang === "es" ? "Filtrar proyectos" : "Filter projects"}>
       {filters.map((item) => <button className={`filter-chip filter-${item} ${filter === item ? "selected" : ""}`} key={item} onClick={() => selectFilter(item)} aria-pressed={filter === item}>{labels[item]}</button>)}
     </div>
     <div className="project-carousel" ref={carouselRef} role="region" aria-label={lang === "es" ? "Carrusel de proyectos" : "Project carousel"} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)}>
@@ -94,7 +94,7 @@ export default function Projects({ lang }: { lang: Language }) {
             <h3>{project.name}</h3><h4>{localized(project.subtitle, lang)}</h4>
             <div className="project-detail"><b>{t.description}</b><p>{localized(project.description, lang)}</p></div>
             <div className="project-detail tech"><b>{t.technologies}</b><p>{localized(project.tech, lang)}</p></div>
-            <div className="project-actions"><a className="button primary" href={project.link} target="_blank" rel="noreferrer"><Icon name="github"/>{t.github}<Icon name="arrow-right"/></a>{project.demoLink && <a className="text-link" href={project.demoLink} target="_blank" rel="noreferrer">{t.viewDemo}<Icon name="arrow-right"/></a>}</div>
+            <div className="project-actions mt-[14px] flex items-center gap-[15px]"><a className="button primary" href={project.link} target="_blank" rel="noreferrer"><Icon name="github"/>{t.github}<Icon name="arrow-right"/></a>{project.demoLink && <a className="text-link" href={project.demoLink} target="_blank" rel="noreferrer">{t.viewDemo}<Icon name="arrow-right"/></a>}</div>
           </div>
         </article>)}
       </div>
