@@ -357,3 +357,27 @@ main,.site-footer{position:relative;z-index:1}
 .project-media.is-portrait .photo-placeholder{width:min(100%,280px);height:350px;min-height:0;aspect-ratio:4 / 5;margin-inline:auto;background:color-mix(in srgb,var(--paper-2) 55%,var(--paper));box-shadow:0 8px 18px rgba(54,20,20,.1)}
 .project-media.is-portrait .photo-placeholder>.placeholder-image{object-fit:contain}
 @media(max-width:700px){.project-media.is-portrait .photo-placeholder{width:min(100%,220px);height:310px;min-height:0;aspect-ratio:auto}}
+
+/* Demo action stays on one line, including its arrow. */
+.project-actions .text-link{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.project-actions .text-link svg{flex:none;width:13px;height:13px}
+
+/* Let these two supplied screenshots keep their original colors and edges. */
+.project-media.natural-image .photo-placeholder{box-shadow:none}
+.project-media.natural-image .photo-placeholder.has-image::after{display:none}
+
+/* Match the PillSense frame to the screenshot's actual portrait ratio. */
+.project-media.is-portrait .photo-placeholder{width:min(100%,230px);height:auto;min-height:0;aspect-ratio:719 / 1371;background:transparent;box-shadow:none}
+.project-media.is-portrait .photo-placeholder>.placeholder-image{object-fit:cover}
+
+@media(max-width:700px){
+  .site-header .menu-toggle{display:grid;place-items:center;padding:0;transform:none!important;rotate:0deg!important;skew:0deg!important}
+  .site-header .menu-toggle svg{display:block;width:19px;height:19px;transform:none!important;rotate:0deg!important;skew:0deg!important}
+  .site-footer .footer-email{width:max-content;max-width:100%;justify-self:start;padding:9px}
+  .site-footer .footer-email h3{display:none}
+  .site-footer .footer-email>div{gap:8px;align-items:center}
+  .site-footer .footer-email>div>a{flex:none;width:40px;height:40px;min-height:40px;padding:0;font-size:0;overflow:hidden}
+  .site-footer .footer-email>div>a svg{position:static;transform:none;width:20px;height:20px}
+  .site-footer .footer-email button{width:40px;height:40px}
+  .project-media.is-portrait .photo-placeholder{width:min(100%,190px);height:auto;min-height:0;aspect-ratio:719 / 1371}
+}
