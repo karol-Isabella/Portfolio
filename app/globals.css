@@ -344,3 +344,16 @@ main,.site-footer{position:relative;z-index:1}
 .contact-form-status.sent{background:color-mix(in srgb,var(--pink) 52%,var(--paper));color:var(--wine-dark)}
 .contact-form-status.error{background:color-mix(in srgb,#c64054 12%,var(--paper));color:#8b1727}
 .contact-form-status a{display:inline-block;margin-left:4px;color:var(--wine);font-weight:700;text-decoration:underline;text-underline-offset:2px}
+
+/* Keep the mobile navigation as a full-width overlay below the header. */
+@media(max-width:700px){
+  .site-header{position:sticky;isolation:isolate}
+  .site-header .nav-pill{position:absolute;top:calc(100% + 8px);left:12px;right:12px;width:auto;max-width:none;z-index:60;display:none;flex-direction:column;align-items:stretch;gap:4px;padding:10px;border:1px solid var(--line);border-radius:16px;background:var(--paper);box-shadow:0 4px 0 var(--wine),0 14px 28px rgba(42,14,18,.18)}
+  .site-header .nav-pill.is-open{display:flex}
+  .site-header .nav-pill a{display:flex;width:100%;min-height:42px;align-items:center;justify-content:center;padding:10px 14px;font-size:11px}
+}
+
+/* Preserve PillSense's tall mobile screenshot instead of stretching it wide. */
+.project-media.is-portrait .photo-placeholder{width:min(100%,280px);height:350px;min-height:0;aspect-ratio:4 / 5;margin-inline:auto;background:color-mix(in srgb,var(--paper-2) 55%,var(--paper));box-shadow:0 8px 18px rgba(54,20,20,.1)}
+.project-media.is-portrait .photo-placeholder>.placeholder-image{object-fit:contain}
+@media(max-width:700px){.project-media.is-portrait .photo-placeholder{width:min(100%,220px);height:310px;min-height:0;aspect-ratio:auto}}

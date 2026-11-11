@@ -88,13 +88,13 @@ export default function Projects({ lang }: { lang: Language }) {
     <div className="project-carousel" ref={carouselRef} role="region" aria-label={lang === "es" ? "Carrusel de proyectos" : "Project carousel"} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)}>
       <div className="project-list" ref={trackRef} onScroll={updateIndexAfterSwipe}>
         {visibleProjects.map((project, i) => <article className={`project-card ${i === activeIndex ? "is-active" : ""}`} key={project.name} data-project-reveal aria-hidden={i !== activeIndex} inert={i !== activeIndex} aria-label={`${project.name}, ${i + 1} ${lang === "es" ? "de" : "of"} ${visibleProjects.length}`}>
-          <div className="project-media"><PhotoPlaceholder lang={lang} src={project.image} alt={`${project.name} preview`}/><span className="media-index">0{projects.indexOf(project) + 1}</span></div>
+          <div className={`project-media${project.portraitImage ? " is-portrait" : ""}`}><PhotoPlaceholder lang={lang} src={project.image} alt={`${project.name} preview`}/><span className="media-index">0{projects.indexOf(project) + 1}</span></div>
           <div className="project-copy">
             {project.featured && <Badge>✦ {lang === "es" ? "DESTACADO" : "FEATURED"}</Badge>}
             <h3>{project.name}</h3><h4>{localized(project.subtitle, lang)}</h4>
             <div className="project-detail"><b>{t.description}</b><p>{localized(project.description, lang)}</p></div>
             <div className="project-detail tech"><b>{t.technologies}</b><p>{localized(project.tech, lang)}</p></div>
-            <div className="project-actions"><a className="button primary" href={project.link} target="_blank" rel="noreferrer"><Icon name="github"/>{t.github}<Icon name="arrow-right"/></a><a className="text-link" href={project.link} target="_blank" rel="noreferrer">{t.more} {project.name}...</a></div>
+            <div className="project-actions"><a className="button primary" href={project.link} target="_blank" rel="noreferrer"><Icon name="github"/>{t.github}<Icon name="arrow-right"/></a>{project.demoLink && <a className="text-link" href={project.demoLink} target="_blank" rel="noreferrer">{t.viewDemo}<Icon name="arrow-right"/></a>}</div>
           </div>
         </article>)}
       </div>
