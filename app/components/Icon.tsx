@@ -1,6 +1,6 @@
 import type { ReactNode, SVGProps } from "react";
 
-type Name = "arrow-right" | "arrow-up" | "arrow-down" | "download" | "eye" | "github" | "linkedin" | "instagram" | "mail" | "phone" | "sun" | "moon" | "menu" | "close" | "copy" | "check" | "sparkle" | "code" | "layers" | "database" | "palette" | "target" | "heart" | "verified";
+type Name = "arrow-right" | "arrow-up" | "arrow-down" | "download" | "eye" | "github" | "linkedin" | "instagram" | "mail" | "phone" | "sun" | "moon" | "menu" | "close" | "copy" | "check" | "sparkle" | "code" | "layers" | "database" | "palette" | "target" | "heart" | "verified" | "user" | "edit" | "message" | "send";
 const paths: Record<Name, ReactNode> = {
   "arrow-right": <path d="M5 12h14m-6-6 6 6-6 6" />,
   "arrow-up": <path d="M12 19V5m-7 7 7-7 7 7" />,
@@ -26,6 +26,10 @@ const paths: Record<Name, ReactNode> = {
   target: <><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></>,
   heart: <path d="M20.8 8.7c0 5.4-8.8 11-8.8 11s-8.8-5.6-8.8-11A4.7 4.7 0 0 1 12 6.1a4.7 4.7 0 0 1 8.8 2.6Z"/>,
   verified: <><path d="m12 3 2.4 1.3 2.7-.1 1.3 2.4 2.3 1.4-.4 2.7.8 2.6-1.9 1.9-.8 2.6-2.7.4-2.1 1.7-2.1-1.7-2.7-.4-.8-2.6-1.9-1.9.8-2.6-.4-2.7 2.3-1.4 1.3-2.4 2.7.1L12 3Z"/><path d="m8.8 12.1 2.1 2.1 4.5-4.6"/></>,
+  user: <><circle cx="12" cy="8" r="3.5"/><path d="M5 21a7 7 0 0 1 14 0"/></>,
+  edit: <><path d="m15 5 4 4M4 20l4.2-.8L19 8.4a2.1 2.1 0 0 0-3-3L5.2 16.2 4 20Z"/></>,
+  message: <><path d="M4 5h16v12H8l-4 3V5Z"/><path d="M8 9h8m-8 4h6"/></>,
+  send: <><path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/></>,
 };
 
 export default function Icon({ name, size = 18, ...props }: SVGProps<SVGSVGElement> & { name: Name; size?: number }) {
