@@ -4,10 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { copy, projects } from "../data";
 import type { Language } from "../types";
 import Icon from "./Icon";
-import { Badge, PhotoPlaceholder, SectionHeading } from "./ui";
+import { Badge, SectionHeading } from "./ui";
+import { PhotoPlaceholder } from "./PhotoPlaceholder";
 
 const localized = (value: string | { es: string; en: string }, lang: Language) => typeof value === "string" ? value : value[lang];
-const categories: Record<string, string[]> = { SENAS: ["design", "build", "create"], "Arq-3❀": ["design", "create"], PillSense: ["build"], VerbPulse: ["design", "build"], NetAgro: ["build", "create"] };
+const categories: Record<string, string[]> = { SENAS: ["design", "build", "create"], "Arq-3❀": ["design", "create"], PillSense: ["build"], VerbPulse: ["design", "build"], NetAgro: ["build", "create"], KashiApp: ["build"] };
 const filters = ["all", "design", "build", "create"] as const;
 
 export default function Projects({ lang }: { lang: Language }) {
@@ -87,7 +88,7 @@ export default function Projects({ lang }: { lang: Language }) {
     <div className="project-carousel" ref={carouselRef} role="region" aria-label={lang === "es" ? "Carrusel de proyectos" : "Project carousel"} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)}>
       <div className="project-list" ref={trackRef} onScroll={updateIndexAfterSwipe}>
         {visibleProjects.map((project, i) => <article className={`project-card ${i === activeIndex ? "is-active" : ""}`} key={project.name} data-project-reveal aria-hidden={i !== activeIndex} inert={i !== activeIndex} aria-label={`${project.name}, ${i + 1} ${lang === "es" ? "de" : "of"} ${visibleProjects.length}`}>
-          <div className="project-media"><PhotoPlaceholder lang={lang}/><span className="media-index">0{projects.indexOf(project) + 1}</span></div>
+          <div className="project-media"><PhotoPlaceholder lang={lang} src={project.image} alt={`${project.name} preview`}/><span className="media-index">0{projects.indexOf(project) + 1}</span></div>
           <div className="project-copy">
             {project.featured && <Badge>✦ {lang === "es" ? "DESTACADO" : "FEATURED"}</Badge>}
             <h3>{project.name}</h3><h4>{localized(project.subtitle, lang)}</h4>
