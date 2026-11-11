@@ -362,13 +362,13 @@ main,.site-footer{position:relative;z-index:1}
 .project-actions .text-link{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
 .project-actions .text-link svg{flex:none;width:13px;height:13px}
 
-/* Let these two supplied screenshots keep their original colors and edges. */
-.project-media.natural-image .photo-placeholder{box-shadow:none}
-.project-media.natural-image .photo-placeholder.has-image::after{display:none}
+/* Keep every project card and image frame at its original size, without wine shadows. */
+.project-media .photo-placeholder{box-shadow:none}
+.project-media .photo-placeholder.has-image::after{display:none}
 
-/* Match the PillSense frame to the screenshot's actual portrait ratio. */
-.project-media.is-portrait .photo-placeholder{width:min(100%,230px);height:auto;min-height:0;aspect-ratio:719 / 1371;background:transparent;box-shadow:none}
-.project-media.is-portrait .photo-placeholder>.placeholder-image{object-fit:cover}
+/* PillSense alone uses a smaller, contained image inside the usual project frame. */
+.project-media.is-portrait .photo-placeholder{width:100%;height:clamp(180px,24vw,250px);min-height:0;aspect-ratio:1.35 / 1;background:var(--paper-2);box-shadow:none}
+.project-media.is-portrait .photo-placeholder>.placeholder-image{width:62%!important;height:88%!important;left:50%!important;top:50%!important;right:auto!important;bottom:auto!important;transform:translate(-50%,-50%);object-fit:contain}
 
 @media(max-width:700px){
   .site-header .menu-toggle{display:grid;place-items:center;padding:0;transform:none!important;rotate:0deg!important;skew:0deg!important}
@@ -377,7 +377,8 @@ main,.site-footer{position:relative;z-index:1}
   .site-footer .footer-email h3{display:none}
   .site-footer .footer-email>div{gap:8px;align-items:center}
   .site-footer .footer-email>div>a{flex:none;width:40px;height:40px;min-height:40px;padding:0;font-size:0;overflow:hidden}
-  .site-footer .footer-email>div>a svg{position:static;transform:none;width:20px;height:20px}
+  .site-footer .footer-email>div>a svg{position:relative;top:2px;transform:none;width:20px;height:20px}
   .site-footer .footer-email button{width:40px;height:40px}
-  .project-media.is-portrait .photo-placeholder{width:min(100%,190px);height:auto;min-height:0;aspect-ratio:719 / 1371}
+  .project-media.is-portrait .photo-placeholder{width:100%;height:190px;min-height:0;aspect-ratio:1.35 / 1}
+  .project-media.is-portrait .photo-placeholder>.placeholder-image{width:52%!important;height:90%!important}
 }
